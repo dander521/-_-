@@ -7,8 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "WXLoginShare.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic,copy)NSString *kWeiXinRefreshToken;
+
+@property (nonatomic,strong)WXLoginShare *wXLoginShare;
 
 @end
 
@@ -16,8 +21,29 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    self.wXLoginShare  = [WXLoginShare shareInstance];
+    [self.wXLoginShare WXLoginShareRegisterApp];
+    [self.wXLoginShare WXLoginShareMesg];
+    
     // Override point for customization after application launch.
     return YES;
+}
+
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+//    id idwXLoginShare = self.wXLoginShare;
+//    return [WXApi handleOpenURL:url delegate:idwXLoginShare];
+//}
+//
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+//    id idwXLoginShare = self.wXLoginShare;
+//    return [WXApi handleOpenURL:url delegate:idwXLoginShare];
+//}
+
+-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    id idwXLoginShare = self.wXLoginShare;
+    return [WXApi handleOpenURL:url delegate:idwXLoginShare];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -41,5 +67,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
 
 @end
